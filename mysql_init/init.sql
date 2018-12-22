@@ -1,5 +1,6 @@
 create database chatbot_db;
 use chatbot_db;
+ALTER DATABASE chatbot_db CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 create table users (
     user_open_id varchar(255),
@@ -13,7 +14,7 @@ create table users (
 
 create table menus (
 	menu_id varchar(255),
-	menu_content longtext,
+	menu_content JSON,
 	PRIMARY KEY (menu_id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -28,15 +29,15 @@ create table assoc_sa_questions (
 	true_answer_decribe_content TEXT,
 	external_link VARCHAR(255),
 	PRIMARY KEY (question_id)
-	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-#LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/SA.csv'
-#INTO TABLE `chatbot_db`.`assoc_sa_questions`
-#CHARACTER SET UTF8
-#FIELDS TERMINATED BY ',' 
-#ENCLOSED BY '"'
-#LINES TERMINATED BY '\n'
-#IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/SA'
+INTO TABLE `chatbot_db`.`assoc_sa_questions`
+CHARACTER SET UTF8
+FIELDS TERMINATED BY '\t' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
 
 create table assoc_dev_questions (
 	question_id INTEGER(255),
@@ -51,14 +52,13 @@ create table assoc_dev_questions (
 	PRIMARY KEY (question_id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-#LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/Develope.csv'
-#INTO TABLE `chatbot_db`.`assoc_dev_questions`
-#CHARACTER SET UTF8
-#FIELDS TERMINATED BY ',' 
-#ENCLOSED BY '"'
-#LINES TERMINATED BY '\n'
-#IGNORE 1 ROWS;
-
+LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/Develope'
+INTO TABLE `chatbot_db`.`assoc_dev_questions`
+CHARACTER SET UTF8
+FIELDS TERMINATED BY '\t' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
 
 
 create table assoc_sys_questions (
@@ -74,17 +74,30 @@ create table assoc_sys_questions (
 	PRIMARY KEY (question_id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-#LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/SYS.csv'
-#INTO TABLE `chatbot_db`.`assoc_sys_questions`
-#CHARACTER SET UTF8
-#FIELDS TERMINATED BY ',' 
-#ENCLOSED BY '"'
-#LINES TERMINATED BY '\n'
-#IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE  '/docker-entrypoint-initdb.d/SYS'
+INTO TABLE `chatbot_db`.`assoc_sys_questions`
+CHARACTER SET UTF8
+FIELDS TERMINATED BY '\t' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
 
-insert into assoc_sa_questions values (1,'Which is an operational process performed by AWS for data security?','AES-256 encryption of data stored on any shared storage device (User responsibility)','Decommissioning of storage devices using industry-standard practices','Background virus scans of EBS volumes and EBS snapshots (No virus scan is performed by AWS on User instances)','Replication of data across multiple AWS Regions (AWS does not replicate data across regions unless done by User)',2,'hhhhhh','ghjkkl');
+create table user_back (
+    user_id varchar(50),
+    user_name varchar(255),
+    user_phone varchar(255),
+    user_email varchar(255),
+    user_context TEXT,
+    user_bool varchar(50),
+    user_data varchar(50),
+    PRIMARY KEY (user_id)
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
+create table login (
+    username varchar(50),
+    password varchar(50),
+    PRIMARY KEY (username)
+	)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 create user 'read_only_user'@'%' IDENTIFIED BY 'iii';
 GRANT SELECT ON chatbot_db.users TO 'read_only_user'@'%' IDENTIFIED BY 'iii';
