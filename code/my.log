@@ -1,0 +1,4 @@
+12-22 06:44 werkzeug     INFO      * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+12-22 06:44 werkzeug     INFO     172.20.0.1 - - [22/Dec/2018 06:44:21] "GET /users HTTP/1.1" 200 -
+12-22 06:44 werkzeug     INFO     172.20.0.1 - - [22/Dec/2018 06:44:22] "GET /favicon.ico HTTP/1.1" 404 -
+12-22 06:44 werkzeug     INFO     172.20.0.1 - - [22/Dec/2018 06:44:35] "GET /question/sa?question_id=1 HTTP/1.1" 200 -
